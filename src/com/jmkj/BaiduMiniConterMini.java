@@ -16,20 +16,29 @@ public class BaiduMiniConterMini {
 	public static int fileCount = 0;
 	public static final String CONVERTE_TYPE_WX="wx";
 	public static final String CONVERTE_TYPE_TOUTIAO="tt";
-	public static void main(String args[])
-	{
-		String dir = "D:/work/baidumini";
 	
-		String dir1 = "D:/work/toutiaomini";
+	
+	public static final String CONVERTE_TYPE_DIRECTORY_WX="weixinminiprogram";
+	public static final String CONVERTE_TYPE_DIRECTORY_TOUTIAO="toutiaomini";
+	
+	
+	public static void main(String args[])
+	
+	{
+		String parentdir="D:/work/";
+		
+		String dir = parentdir+"baidumini";
+	
+		String dir1 = parentdir+CONVERTE_TYPE_DIRECTORY_WX;
 		File filenew = new File(dir1);
 		if(!filenew.exists()) {
 			filenew.mkdir();
 		}
 		
-		print_file(dir,BaiduMiniConterMini.CONVERTE_TYPE_TOUTIAO);
+		print_file(dir,CONVERTE_TYPE_WX,CONVERTE_TYPE_DIRECTORY_WX);
 
 	}
-	public static void print_file (String dir,String type)
+	public static void print_file (String dir,String type,String typedirectory)
 	{
 		File file = new File(dir);
 		
@@ -43,19 +52,19 @@ public class BaiduMiniConterMini {
 				if(tempFile.isDirectory())
 				{
 					
-					File filenew1 = new File(tempFile.getAbsolutePath().replace("baidumini", "toutiaomini"));
+					File filenew1 = new File(tempFile.getAbsolutePath().replace("baidumini", typedirectory));
 					if(!filenew1.exists()) {
 						filenew1.mkdirs();
 					}
 				
 				
-					print_file(tempFile.getAbsolutePath(),BaiduMiniConterMini.CONVERTE_TYPE_TOUTIAO);
+					print_file(tempFile.getAbsolutePath(),type,typedirectory);
 				}else{
 					fileCount++;
 					
 					String path1=tempFile.getAbsolutePath();
-					String path2 = tempFile.getAbsolutePath().replace("baidumini", "toutiaomini");
-					readwrite(path1,path2,BaiduMiniConterMini.CONVERTE_TYPE_TOUTIAO);
+					String path2 = tempFile.getAbsolutePath().replace("baidumini", typedirectory);
+					readwrite(path1,path2,type);
 				}
 			}
 			
@@ -110,7 +119,7 @@ public class BaiduMiniConterMini {
 					
 				
 					 path2 = 	processFileName(type,path2);
-					 System.out.println(path2);
+			
 					String s = 	processFileContent(type,sb.toString(),path2);
 					if(type.equals(BaiduMiniConterMini.CONVERTE_TYPE_WX)) {
 						if(s.indexOf("wx.setPageInfo")>-1) {
@@ -118,7 +127,7 @@ public class BaiduMiniConterMini {
 					
 							String s2 = s.substring(s.indexOf("wx.setPageInfo")+1);
 							String s3 =s2.substring(s2.indexOf(");")+3);
-							System.out.println(s3);
+						
 							s=s1+s3;
 						}
 					}
@@ -128,7 +137,7 @@ public class BaiduMiniConterMini {
 					
 							String s2 = s.substring(s.indexOf("tt.setPageInfo")+1);
 							String s3 =s2.substring(s2.indexOf(");")+3);
-							System.out.println(s3);
+					
 							s=s1+s3;
 						}
 						
@@ -186,6 +195,8 @@ public class BaiduMiniConterMini {
 	
 	private static String  processFileName(String type, String path2) {
 		// TODO Auto-generated method stub
+		
+		
 		if(type.equals(BaiduMiniConterMini.CONVERTE_TYPE_WX)) {
 		   String frontPath = path2.substring(0,path2.lastIndexOf("."));
 		   String suffix = path2.substring(path2.lastIndexOf(".") + 1);
@@ -208,7 +219,7 @@ public class BaiduMiniConterMini {
 			
 			path2=frontPath+"."+suffix;
 		
-			
+	
 		}
 		if(type.equals(BaiduMiniConterMini.CONVERTE_TYPE_TOUTIAO)) {
 			   String frontPath = path2.substring(0,path2.lastIndexOf("."));
