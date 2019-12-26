@@ -1,4 +1,4 @@
-package aaa;
+package com.jmkj;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
