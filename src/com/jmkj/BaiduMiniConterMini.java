@@ -29,7 +29,7 @@ public class BaiduMiniConterMini {
 		
 		String dir = parentdir+"baidumini";
 	
-		String dir1 = parentdir+CONVERTE_TYPE_DIRECTORY_WX;
+		String dir1 = parentdir+CONVERTE_TYPE_DIRECTORY_TOUTIAO;
 		File filenew = new File(dir1);
 		if(!filenew.exists()) {
 			filenew.mkdir();
@@ -185,7 +185,7 @@ public class BaiduMiniConterMini {
 			if(path2.contains("ttml")) {
 					s=s.replace("s-", "tt:").replace("item, index in list", "{{list}}").replace("tt:key=\"{{index}}\"", "tt:for-index=\"index\" tt:for-item=\"item\"");
 			}
-			if(path2.contains("wxss")) {
+			if(path2.contains("ttss")) {
 					s=s.replace("weui.css", "weui.ttss");
 			}
 		}
